@@ -1,0 +1,32 @@
+# Build artifacts
+*.o
+*.obj
+*.exe
+*.out
+*.dll
+*.so
+*.a
+*.lib
+*.bin
+build/
+bin/
+obj/
+
+# Debugging and profiling
+*.gch
+*.dSYM
+vgcore.*
+
+# Editor and IDE files (examples)
+.vscode/
+.idea/
+*.swp
+*~
+*.bak
+*.log
+.DS_Store # macOS specific
+Thumbs.db # Windows specific
+
+# Dependency management (if applicable, e.g., Conan)
+conanbuildinfo.cmake
+conan_deps/
