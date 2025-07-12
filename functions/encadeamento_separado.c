@@ -1,4 +1,4 @@
-#include "base.h"
+#include "dependencies.h"
 
 typedef struct Hash_ES
 {
@@ -7,7 +7,15 @@ typedef struct Hash_ES
 }
 Hash_ES;
 
-int colisoes_ES = 0; // // CONTADOR DE COLISÕES PARA A FUNÇÃO DE INSERIR
+int colisoes_ES = 0; // CONTADOR DE COLISÕES PARA A FUNÇÃO DE INSERIR
+
+void iniciar_ES (Hash_ES *tabela [])
+{
+    for (int i = 0; i < tamanho; i++)
+    {
+        tabela [i] = NULL;
+    }
+}
 
 void inserir_ES (Hash_ES *tabela [], int chave)
 {
@@ -49,7 +57,7 @@ int buscar_ES (Hash_ES *tabela [], int chave)
     return -1;
 }
 
-void excluir_ES (Hash_ES *tabela [], int chave)
+void remover_ES (Hash_ES *tabela [], int chave)
 {
     int indice = hashing (chave);
     Hash_ES *aux;

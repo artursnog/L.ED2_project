@@ -1,4 +1,4 @@
-#include "base.h"
+#include "dependencies.h"
 
 typedef struct
 {
@@ -33,7 +33,7 @@ void inserir_SL (Hash_SL tabela [], int chave)
     {
         tabela [indice].chave = chave;
         tabela [indice].status = 'O';
-    }
+    } // SEM NOTIFICAÇÃO DE ELEMENTOS NÃO INSERIDOS DEVIDO A TABELA ESTAR CHEIA
 }
 
 int buscar_SL (Hash_SL tabela [], int chave)

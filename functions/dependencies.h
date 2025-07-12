@@ -1,7 +1,12 @@
+#ifndef HASH_H
+#define HASH_H
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-const int tamanho = 997;
+const int tamanho = 997,
+num_elementos = 1009;
 
 int hashing (int chave)
 {
@@ -15,3 +20,5 @@ int hashing (int chave)
 
     return (int)(tamanho * k_A_mod1);
 }
+
+#endif
