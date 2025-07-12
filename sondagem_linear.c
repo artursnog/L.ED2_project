@@ -1,3 +1,5 @@
+#include "base.h"
+
 typedef struct
 {
     int chave;
@@ -7,17 +9,7 @@ Hash_SL;
 
 int colisoes_SL = 0; // CONTADOR DE COLISÕES PARA A FUNÇÃO DE INSERIR
 
-int hashing_SL (int chave, int tamanho)
-{
-    if (chave < 0)
-    {
-        chave = chave * (-1);
-    }
-
-    return chave % tamanho;
-}
-
-void iniciar_SL (Hash_SL tabela [], int tamanho)
+void iniciar_SL (Hash_SL tabela [])
 {
     for (int i = 0; i < tamanho; i++)
     {
@@ -25,10 +17,10 @@ void iniciar_SL (Hash_SL tabela [], int tamanho)
     }
 }
 
-void inserir_SL (Hash_SL tabela [], int chave, int tamanho)
+void inserir_SL (Hash_SL tabela [], int chave)
 {
     int i = 0,
-    indice = hashing_SL (chave, tamanho);
+    indice = hashing (chave);
 
     while ((i < tamanho) && (tabela [indice].status == 'O'))
     {
@@ -44,10 +36,10 @@ void inserir_SL (Hash_SL tabela [], int chave, int tamanho)
     }
 }
 
-int buscar_SL (Hash_SL tabela [], int chave, int tamanho)
+int buscar_SL (Hash_SL tabela [], int chave)
 {
     int i = 0,
-    indice = hashing_SL (chave, tamanho);
+    indice = hashing (chave);
 
     while ((i < tamanho) && (tabela [indice].chave != chave) && (tabela [indice].status != 'L'))
     {
@@ -65,9 +57,9 @@ int buscar_SL (Hash_SL tabela [], int chave, int tamanho)
     }
 }
 
-void remover_SL (Hash_SL tabela [], int chave, int tamanho)
+void remover_SL (Hash_SL tabela [], int chave)
 {
-    int indice = buscar_SL (tabela, chave, tamanho);
+    int indice = buscar_SL (tabela, chave);
 
     if (indice < tamanho)
     {

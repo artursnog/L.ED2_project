@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include "base.h"
 
 typedef struct Hash_ES
 {
@@ -7,29 +7,34 @@ typedef struct Hash_ES
 }
 Hash_ES;
 
-int hashing_ES (int chave, int tamanho)
+int colisoes_ES = 0; // // CONTADOR DE COLISÕES PARA A FUNÇÃO DE INSERIR
+
+void inserir_ES (Hash_ES *tabela [], int chave)
 {
-    if (chave < 0)
+    int indice = hashing (chave);
+
+    if (tabela [indice] != NULL)
     {
-        chave = chave * (-1);
+        colisoes_ES = colisoes_ES + 1;
     }
 
-    return chave % tamanho;
-}
-
-void inserir_ES (Hash_ES *tabela [], int chave, int tamanho)
-{
     Hash_ES *novo = (Hash_ES*)malloc (sizeof (Hash_ES));
 
-    novo->chave = chave;
-    novo->prox = tabela [hashing_ES (chave, tamanho)];
+    if (!novo)
+    {
+        perror ("");
+        exit (EXIT_FAILURE);
+    }
 
-    tabela [hashing_ES (chave, tamanho)] = novo;
+    novo->chave = chave;
+    novo->prox = tabela [indice];
+
+    tabela [indice] = novo;
 }
 
-int buscar_ES (Hash_ES *tabela [], int chave, int tamanho)
+int buscar_ES (Hash_ES *tabela [], int chave)
 {
-    Hash_ES *aux = tabela [hashing_ES (chave, tamanho)];
+    Hash_ES *aux = tabela [hashing (chave)];
 
     while (aux != NULL)
     {
@@ -44,9 +49,9 @@ int buscar_ES (Hash_ES *tabela [], int chave, int tamanho)
     return -1;
 }
 
-void excluir_ES (Hash_ES *tabela [], int chave, int tamanho)
+void excluir_ES (Hash_ES *tabela [], int chave)
 {
-    int indice = hashing_ES (chave, tamanho);
+    int indice = hashing (chave);
     Hash_ES *aux;
 
     if (tabela [indice] != NULL)
@@ -77,7 +82,7 @@ void excluir_ES (Hash_ES *tabela [], int chave, int tamanho)
     }
 }
 
-void liberar_ES (Hash_ES *tabela [], int tamanho)
+void liberar_ES (Hash_ES *tabela [])
 {
     for (int i = 0; i < tamanho; i++)
     {
