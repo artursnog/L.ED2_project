@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const int tamanho = 31415;
+const int tamanho = 997;
 
 int hashing (int chave)
 {
@@ -10,5 +10,8 @@ int hashing (int chave)
         chave = chave * (-1);
     }
 
-    return chave % tamanho;
+    double GR = 0.61803398875,
+    k_A_mod1 = ((chave * GR) - (int)(chave * GR));
+
+    return (int)(tamanho * k_A_mod1);
 }
