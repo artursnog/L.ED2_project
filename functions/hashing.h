@@ -21,4 +21,12 @@ int hashing (int chave)
     return (int)(tamanho * k_A_mod1);
 }
 
+void gerar_elementos (int num_elementos, int chaves [])
+{
+    for (int i = 0; i < num_elementos; i++)
+    {
+        chaves [i] = rand ();
+    }
+}
+
 #endif

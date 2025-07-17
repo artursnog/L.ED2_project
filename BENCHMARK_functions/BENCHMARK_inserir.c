@@ -1,14 +1,20 @@
 #include "../functions/functions_headers.h"
 
 // FUNÇÃO PARA A ANÁLISE DE PERFOMANCE DE INSERÇÃO DAS DUAS ESTRATÉGIAS
-void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], int chaves [], int num_elementos)
+void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
 {
     puts ("[INSERÇÃO]");
+
+    int chaves [num_elementos]; // Vetor dos elementos que serão inseridos
+
+    gerar_elementos (num_elementos, chaves);
 
     clock_t tempo_i;
     double tempo_t = 0.0;
     int colisoes_t = 0;
     
+// ========== ENCADEAMENTO SEPARADO ==========
+
     {
         puts ("Encadeamento separado:");
 
@@ -30,15 +36,17 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], int chaves 
             liberar_ES (tabela_ES);
         }
 
-        printf ("Para a inserção de %i números inteiros, após 10 execuções a estratégia de colisão por encadeamento separado resultou em\n",
+        printf ("Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos a estratégia de colisão por encadeamento separado resultou em\n",
         num_elementos);
 
         printf ("->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n",
         colisoes_t / 10, tempo_t / 10.0);
     }
 
-    colisoes_t = 0;
-    tempo_t = 0.0;
+    colisoes_t = 0; // Redefinição da medida de colisões total
+    tempo_t = 0.0; // Redefinição da medida de tempo total
+
+// ========== SONDAGEM LINEAR ==========
 
     {
         puts ("\nSondagem linear:");
@@ -59,7 +67,7 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], int chaves 
             colisoes_t += colisoes_SL;
         }
 
-        printf ("Para a inserção de %i números inteiros, após 10 execuções a estratégia de colisão por sondagem linear resultou em\n",
+        printf ("Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos a estratégia de colisão por sondagem linear resultou em\n",
         num_elementos);
 
         printf ("->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n",
