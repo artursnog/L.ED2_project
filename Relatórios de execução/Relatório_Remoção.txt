@@ -1,0 +1,34 @@
+[REMOÇÃO]
+Encadeamento separado:
+Para a remoção de 1009 números inteiros, após 10 execuções diferentes removendo os mesmos elementos
+a estratégia de colisão por encadeamento separado resultou em
+
+->	Tempo médio-aritmético de execução: (0.000023)s
+
+[1]ª execução: (0.000031)s
+[2]ª execução: (0.000025)s
+[3]ª execução: (0.000023)s
+[4]ª execução: (0.000022)s
+[5]ª execução: (0.000021)s
+[6]ª execução: (0.000022)s
+[7]ª execução: (0.000021)s
+[8]ª execução: (0.000021)s
+[9]ª execução: (0.000021)s
+[10]ª execução: (0.000021)s
+
+Sondagem linear:
+Para a remoção de 1009 números inteiros, após 10 execuções diferentes removendo os mesmos elementos
+a estratégia de colisão por sondagem linear resultou em
+
+->	Tempo médio-aritmético de execução: (0.000097)s
+
+[1]ª execução: (0.000103)s
+[2]ª execução: (0.000102)s
+[3]ª execução: (0.000099)s
+[4]ª execução: (0.000096)s
+[5]ª execução: (0.000098)s
+[6]ª execução: (0.000095)s
+[7]ª execução: (0.000094)s
+[8]ª execução: (0.000094)s
+[9]ª execução: (0.000094)s
+[10]ª execução: (0.000096)s
