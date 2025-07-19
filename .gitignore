@@ -30,3 +30,5 @@ Thumbs.db # Windows specific
 # Dependency management (if applicable, e.g., Conan)
 conanbuildinfo.cmake
 conan_deps/
+
+main

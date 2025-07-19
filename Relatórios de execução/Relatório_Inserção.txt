@@ -1,0 +1,36 @@
+[INSERÇÃO]
+Encadeamento separado:
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
+a estratégia de colisão por encadeamento separado resultou em
+
+->	Média de 390 colisões
+->	Tempo médio-aritmético de execução: (0.000017)s
+
+[1]ª execução: (0.000034)s
+[2]ª execução: (0.000019)s
+[3]ª execução: (0.000019)s
+[4]ª execução: (0.000016)s
+[5]ª execução: (0.000015)s
+[6]ª execução: (0.000013)s
+[7]ª execução: (0.000014)s
+[8]ª execução: (0.000013)s
+[9]ª execução: (0.000013)s
+[10]ª execução: (0.000013)s
+
+Sondagem linear:
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
+a estratégia de colisão por sondagem linear resultou em
+
+->	Média de 26023 colisões
+->	Tempo médio-aritmético de execução: (0.000084)s
+
+[1]ª execução: (0.000087)s
+[2]ª execução: (0.000088)s
+[3]ª execução: (0.000085)s
+[4]ª execução: (0.000083)s
+[5]ª execução: (0.000082)s
+[6]ª execução: (0.000083)s
+[7]ª execução: (0.000082)s
+[8]ª execução: (0.000083)s
+[9]ª execução: (0.000083)s
+[10]ª execução: (0.000082)s

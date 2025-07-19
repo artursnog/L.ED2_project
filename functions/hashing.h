@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define BREAKL puts ("\n==================================================\n")
+
 const int tamanho = 997,
 num_elementos = 1009;
 
