@@ -1,6 +1,6 @@
 #include "../functions/functions_headers.h"
 
-void TMPRR_inserir_ES (Hash_ES *tabela_ES [], int chaves []) // FUNÇÃO LOCAL PARA A INSERÇÃO DE ELEMENTOS NAS TABELAS APÓS ESVAZIAMENTO DEVIDO TESTE
+void TMPRR_inserir_ES (Hash_ES *tabela_ES [], int chaves []) // FUNÇÃO LOCAL PARA A INSERÇÃO NA TABELA DE ENCADEAMENTO SEPARADO APÓS ESVAZIAMENTO POR TESTE
 {
     iniciar_ES (tabela_ES);
 
@@ -10,7 +10,7 @@ void TMPRR_inserir_ES (Hash_ES *tabela_ES [], int chaves []) // FUNÇÃO LOCAL P
     }
 }
 
-void TMPRR_inserir_SL (Hash_SL tabela_SL [], int chaves []) // FUNÇÃO LOCAL PARA A INSERÇÃO DE ELEMENTOS NAS TABELAS APÓS ESVAZIAMENTO DEVIDO TESTE
+void TMPRR_inserir_SL (Hash_SL tabela_SL [], int chaves []) // FUNÇÃO LOCAL PARA A INSERÇÃO NA TABELA DE SONDAGEM LINEAR APÓS ESVAZIAMENTO POR TESTE
 {
     iniciar_SL (tabela_SL);
 
@@ -30,8 +30,8 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
         exit (EXIT_FAILURE);
     }
 
-    puts ("[REMOÇÃO]");
-    fprintf (file, "[REMOÇÃO]\nEncadeamento separado:\n");
+    puts ("[REMOÇÃO]\n");
+    fprintf (file, "[REMOÇÃO]\n\n");
 
     int chaves [num_elementos]; // Vetor dos elementos que serão inseridos
 
@@ -43,7 +43,8 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
 // ========== ENCADEAMENTO SEPARADO ==========
 
     {
-        puts ("Encadeamento separado:\n");
+        puts ("Encadeamento separado:");
+        fprintf (file, "Encadeamento separado:\n");
 
         for (int i = 0; i < 10; i++)
         {
@@ -60,7 +61,7 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
 
             tempo_t += tempos [i];
 
-            liberar_ES (tabela_ES);
+            liberar_ES (tabela_ES); // LIBERAR ANTES DA REINSERÇÃO DOS ELEMENTOS PARA NOVO TESTE
         }
 
         printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de colisão por encadeamento separado resultou em\n\n",
@@ -84,7 +85,7 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
 // ========== SONDAGEM LINEAR ==========
 
     {
-        puts ("\nSondagem linear:\n");
+        puts ("\nSondagem linear:");
         fprintf (file, "\nSondagem linear:\n");
 
         for (int i = 0; i < 10; i++)

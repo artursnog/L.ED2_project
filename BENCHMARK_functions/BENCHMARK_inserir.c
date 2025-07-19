@@ -10,8 +10,8 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
         exit (EXIT_FAILURE);
     }
 
-    puts ("[INSERÇÃO]");
-    fprintf (file, "[INSERÇÃO]\nEncadeamento separado:\n");
+    puts ("[INSERÇÃO]\n");
+    fprintf (file, "[INSERÇÃO]\n\n");
 
     int chaves [num_elementos]; // Vetor dos elementos que serão inseridos
 
@@ -25,6 +25,7 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
 
     {
         puts ("Encadeamento separado:");
+        fprintf (file, "Encadeamento separado:\n");
 
         for (int i = 0; i < 10; i++) // Laço para a tomada de 10 (dez) medida de tempo para a média aritmética
         {

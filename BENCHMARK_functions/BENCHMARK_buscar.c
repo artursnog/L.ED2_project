@@ -10,8 +10,8 @@ void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
         exit (EXIT_FAILURE);
     }
     
-    puts ("[BUSCA]");
-    fprintf (file, "[BUSCA]\nEncadeamento separado:\n");
+    puts ("[BUSCA]\n");
+    fprintf (file, "[BUSCA]\n\n");
 
     int chaves [num_elementos]; // Vetor dos elementos que serão buscados
 
@@ -32,7 +32,8 @@ void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
 // ========== ENCADEAMENTO SEPARADO ==========
 
     {
-        puts ("\nEncadeamento separado:");
+        puts ("Encadeamento separado:");
+        fprintf (file, "Encadeamento separado:n");
 
         for (int i = 0; i < 10; i++) // Laço para a tomada de 10 (dez) medida de tempo para a média aritmética
         {

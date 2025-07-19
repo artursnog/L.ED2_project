@@ -1,34 +1,34 @@
 [BUSCA]
-Encadeamento separado:
-Para a busca de 1009 números inteiros, após 10 execuções diferentes buscando os mesmos elementos
+
+Encadeamento separado:nPara a busca de 1009 números inteiros, após 10 execuções diferentes buscando os mesmos elementos
 a estratégia de colisão por encadeamento separado resultou em
 
-->	Tempo médio-aritmético de execução: (0.000007)s
+->	Tempo médio-aritmético de execução: (0.000010)s
 
-[1]ª execução: (0.000015)s
-[2]ª execução: (0.000010)s
-[3]ª execução: (0.000007)s
-[4]ª execução: (0.000006)s
+[1]ª execução: (0.000016)s
+[2]ª execução: (0.000016)s
+[3]ª execução: (0.000024)s
+[4]ª execução: (0.000008)s
 [5]ª execução: (0.000006)s
 [6]ª execução: (0.000006)s
 [7]ª execução: (0.000006)s
 [8]ª execução: (0.000006)s
 [9]ª execução: (0.000006)s
-[10]ª execução: (0.000006)s
+[10]ª execução: (0.000007)s
 
 Sondagem linear:
 Para a busca de 1009 números inteiros, após 10 execuções diferentes buscando os mesmos elementos
 a estratégia de colisão por sondagem linear resultou em
 
-->	Tempo médio-aritmético de execução: (0.000118)s
+->	Tempo médio-aritmético de execução: (0.000080)s
 
-[1]ª execução: (0.000124)s
-[2]ª execução: (0.000123)s
-[3]ª execução: (0.000119)s
-[4]ª execução: (0.000118)s
-[5]ª execução: (0.000121)s
-[6]ª execução: (0.000116)s
-[7]ª execução: (0.000116)s
-[8]ª execução: (0.000116)s
-[9]ª execução: (0.000116)s
-[10]ª execução: (0.000115)s
+[1]ª execução: (0.000091)s
+[2]ª execução: (0.000085)s
+[3]ª execução: (0.000082)s
+[4]ª execução: (0.000078)s
+[5]ª execução: (0.000077)s
+[6]ª execução: (0.000078)s
+[7]ª execução: (0.000077)s
+[8]ª execução: (0.000077)s
+[9]ª execução: (0.000082)s
+[10]ª execução: (0.000078)s
