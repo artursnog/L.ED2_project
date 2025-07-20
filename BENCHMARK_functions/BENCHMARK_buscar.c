@@ -3,7 +3,14 @@
 // FUNÇÃO PARA A ANÁLISE DE PERFOMANCE DE BUSCA DAS DUAS ESTRATÉGIAS
 void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
 {
-    FILE *file = fopen ("Relatórios de execução/Relatório_Busca.txt", "w");
+    FILE *file;
+
+    #ifdef __WIN32__
+        file = fopen ("Execution_Reports\\Searching_Report.txt", "w");
+    #else
+        file = fopen ("Execution_Reports/Searching_Report.txt", "w");
+    #endif
+
     if (!file)
     {
         perror ("");

@@ -1,7 +1,15 @@
 #include "hash.h"
 
+#ifdef __WIN32__
+    #include <locale.h>
+#endif
+
 int main ()
 {
+    #ifdef __WIN32__
+        setlocale (LC_ALL, "");
+    #endif
+
     srand (time (NULL));
 
     Hash_ES *tabela_ES [tamanho];

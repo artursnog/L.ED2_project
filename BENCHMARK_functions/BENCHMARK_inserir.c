@@ -3,7 +3,14 @@
 // FUNÇÃO PARA A ANÁLISE DE PERFOMANCE DE INSERÇÃO DAS DUAS ESTRATÉGIAS
 void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
 {
-    FILE *file = fopen ("Relatórios de execução/Relatório_Inserção.txt", "w");
+    FILE *file;
+
+    #ifdef __WIN32__
+        file = fopen ("Execution_Reports\\Insertion_Report.txt", "w");
+    #else
+        file = fopen ("Execution_Reports/Insertion_Report.txt", "w");
+    #endif
+
     if (!file)
     {
         perror ("");

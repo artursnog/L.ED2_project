@@ -23,7 +23,14 @@ void TMPRR_inserir_SL (Hash_SL tabela_SL [], int chaves []) // FUNÇÃO LOCAL PA
 // FUNÇÃO PARA A ANÁLISE DE PERFOMANCE DE REMOÇÃO DAS DUAS ESTRATÉGIAS
 void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
 {
-    FILE *file = fopen ("Relatórios de execução/Relatório_Remoção.txt", "w");
+    FILE *file;
+
+    #ifdef __WIN32__
+        file = fopen ("Execution_Reports\\Removal_Report.txt", "w");
+    #else
+        file = fopen ("Execution_Reports/Removal_Report.txt", "w");
+    #endif
+
     if (!file)
     {
         perror ("");
