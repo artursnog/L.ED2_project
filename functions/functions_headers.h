@@ -3,5 +3,7 @@
 
 #include "encadeamento_separado.c"
 #include "sondagem_linear.c"
+#include "sondagem_quadratica.c"
+#include "sondagem_dupla.c"
 
 #endif

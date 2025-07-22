@@ -23,6 +23,10 @@ int hashing (int chave)
     return (int)(tamanho * k_A_mod1);
 }
 
+int hashing2(int chave){
+    return 1 + (chave % (tamanho));
+}
+
 void gerar_elementos (int num_elementos, int chaves [])
 {
     for (int i = 0; i < num_elementos; i++)
