@@ -1,16 +1,16 @@
 #include "../functions/functions_headers.h"
 
 // FUNÇÃO PARA A ANÁLISE DE PERFOMANCE DE BUSCA DAS DUAS ESTRATÉGIAS
-void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
+void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], Hash_SQ tabela_SQ [], Hash_SD tabela_SD [])
 {
     FILE *file;
 
     #ifdef __WIN32__
         file = fopen ("Execution_Reports\\Searching_Report.txt", "w");
     #else
-        file = fopen ("Execution_Reports/Searching_Report.txt", "w");
+        file = fopen ("Execution_Reports/Search_Report.txt", "w");
     #endif
-
+    
     if (!file)
     {
         perror ("");
@@ -111,5 +111,78 @@ void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
     }
 
     liberar_ES (tabela_ES);
-    fclose (file);
+    tempo_t = 0.0; 
+
+
+// ========== SONDAGEM QUADRÁTICA ==========
+
+    {
+        puts("Sondagem quadrática:");
+        fprintf(file, "Sondagem quadrática:\n");
+
+        iniciar_SQ(tabela_SQ);
+        for (int j = 0; j < num_elementos; j++)
+            inserir_SQ(tabela_SQ, chaves[j]);
+
+        for (int i = 0; i < 10; i++) {
+            tempo_i = clock();
+            for (int j = 0; j < num_elementos; j++)
+                buscar_SQ(tabela_SQ, chaves[j]);
+            tempos[i] = (double)(clock() - tempo_i) / CLOCKS_PER_SEC;
+            tempo_t += tempos[i];
+        }
+
+        printf ("Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos a estratégia de colisão por sondagem quadrática resultou em\n\n",
+        num_elementos);
+        fprintf (file, "Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos\na estratégia de colisão por sondagem quadrática resultou em\n\n",
+        num_elementos);
+
+        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
+        tempo_t / 10.0);
+        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
+        tempo_t / 10.0);
+
+        for (int i = 0; i < 10; i++)
+        {
+            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
+        }
+    }
+
+    tempo_t = 0.0;
+
+// ========== HASH DUPLO ==========
+
+    {
+        puts("Hash duplo:");
+        fprintf(file, "Hash duplo:\n");
+
+        iniciar_SD(tabela_SD);
+        for (int j = 0; j < num_elementos; j++)
+            inserir_SD(tabela_SD, chaves[j]);
+
+        for (int i = 0; i < 10; i++) {
+            tempo_i = clock();
+            for (int j = 0; j < num_elementos; j++)
+                buscar_SD(tabela_SD, chaves[j]);
+            tempos[i] = (double)(clock() - tempo_i) / CLOCKS_PER_SEC;
+            tempo_t += tempos[i];
+        }
+
+        printf ("Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos a estratégia de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
+        num_elementos);
+        fprintf (file, "Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos\na estratégia de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
+        num_elementos);
+
+        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
+        tempo_t / 10.0);
+        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
+        tempo_t / 10.0);
+
+        for (int i = 0; i < 10; i++)
+        {
+            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
+        }
+
+    }
+    fclose(file);
 }

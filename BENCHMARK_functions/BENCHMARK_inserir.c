@@ -1,7 +1,7 @@
 #include "../functions/functions_headers.h"
 
 // FUNÇÃO PARA A ANÁLISE DE PERFOMANCE DE INSERÇÃO DAS DUAS ESTRATÉGIAS
-void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
+void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], Hash_SQ tabela_SQ [], Hash_SD tabela_SD [])
 {
     FILE *file;
 
@@ -10,7 +10,7 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
     #else
         file = fopen ("Execution_Reports/Insertion_Report.txt", "w");
     #endif
-
+    
     if (!file)
     {
         perror ("");
@@ -100,6 +100,92 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_SL tabela_SL [])
         printf ("Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos a estratégia de colisão por sondagem linear resultou em\n\n",
         num_elementos);
         fprintf (file, "Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos\na estratégia de colisão por sondagem linear resultou em\n\n",
+        num_elementos);
+
+        printf ("->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n",
+        colisoes_t / 10, tempo_t / 10.0);
+        fprintf (file, "->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
+        colisoes_t / 10, tempo_t / 10.0);
+
+        for (int i = 0; i < 10; i++)
+        {
+            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
+        }
+    }
+
+    colisoes_t = 0; 
+    tempo_t = 0.0; 
+
+// ========== SONDAGEM QUADRÁTICA ==========
+
+    {
+        puts ("\nSondagem quadrática:");
+        fprintf (file, "\nSondagem quadrática:\n");
+
+        for (int i = 0; i < 10; i++)
+        {
+            iniciar_SQ(tabela_SQ);
+            
+            colisoes_SQ = 0;
+            tempo_i = clock ();
+
+            for (int j = 0; j < num_elementos; j++)
+            {
+                inserir_SQ(tabela_SQ, chaves[j]);
+            }
+
+            tempos[i] = ((double)(clock () - tempo_i) / CLOCKS_PER_SEC);
+
+            tempo_t += tempos[i];
+            colisoes_t += colisoes_SQ;
+        }
+
+        printf ("Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos a estratégia de colisão por sondagem quadrática resultou em\n\n",
+        num_elementos);
+        fprintf (file, "Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos\na estratégia de colisão por sondagem quadrática resultou em\n\n",
+        num_elementos);
+
+        printf ("->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n",
+        colisoes_t / 10, tempo_t / 10.0);
+        fprintf (file, "->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
+        colisoes_t / 10, tempo_t / 10.0);
+
+        for (int i = 0; i < 10; i++)
+        {
+            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
+        }
+    }
+
+    colisoes_t = 0;
+    tempo_t = 0.0;
+
+// ========== DUPLO HASHING ==========
+
+    {
+        puts ("\nDuplo hashing:");
+        fprintf (file, "\nDuplo hashing:\n");
+
+        for (int i = 0; i < 10; i++)
+        {
+            iniciar_SD(tabela_SD);
+            
+            colisoes_SD = 0;
+            tempo_i = clock ();
+
+            for (int j = 0; j < num_elementos; j++)
+            {
+                inserir_SD(tabela_SD, chaves[j]);
+            }
+
+            tempos[i] = ((double)(clock () - tempo_i) / CLOCKS_PER_SEC);
+
+            tempo_t += tempos[i];
+            colisoes_t += colisoes_SD;
+        }
+
+        printf ("Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos a estratégia de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
+        num_elementos);
+        fprintf (file, "Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos\na estratégia de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
         num_elementos);
 
         printf ("->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n",
