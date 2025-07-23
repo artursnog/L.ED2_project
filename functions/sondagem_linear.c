@@ -17,7 +17,7 @@ void iniciar_SL (Hash_SL tabela [])
     }
 }
 
-void inserir_SL (Hash_SL tabela [], int chave)
+void inserir_SL (Hash_SL tabela [], int chave) // FUNÇÃO DE INSERÇÃO
 {
     int i = 0,
     indice = hashing (chave);
