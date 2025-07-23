@@ -17,7 +17,7 @@ void iniciar_ES (Hash_ES *tabela [])
     }
 }
 
-void inserir_ES (Hash_ES *tabela [], int chave)
+void inserir_ES (Hash_ES *tabela [], int chave) // FUNÇÃO DE INSERÇÃO
 {
     int indice = hashing (chave);
 
