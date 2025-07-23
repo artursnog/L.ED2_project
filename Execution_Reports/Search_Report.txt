@@ -1,85 +1,96 @@
 [BUSCA]
 
-Encadeamento separado:nPara a busca de 1009 números inteiros, após 10 execuções diferentes buscando os mesmos elementos
+=========================
+
+Encadeamento separado:
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
 a estratégia de tratamento de colisão por encadeamento separado resultou em
 
-->	Tempo médio-aritmético de execução: (0.000022)s
+->	Tempo médio-aritmético de execução: (0.000081)s
 
-[1]ª execução: (0.000048)s
-[2]ª execução: (0.000029)s
-[3]ª execução: (0.000018)s
-[4]ª execução: (0.000018)s
-[5]ª execução: (0.000017)s
-[6]ª execução: (0.000017)s
-[7]ª execução: (0.000017)s
-[8]ª execução: (0.000017)s
-[9]ª execução: (0.000017)s
-[10]ª execução: (0.000017)s
+[1]ª execução: (0.000139)s
+[2]ª execução: (0.000108)s
+[3]ª execução: (0.000089)s
+[4]ª execução: (0.000078)s
+[5]ª execução: (0.000078)s
+[6]ª execução: (0.000074)s
+[7]ª execução: (0.000068)s
+[8]ª execução: (0.000056)s
+[9]ª execução: (0.000064)s
+[10]ª execução: (0.000055)s
+
+=========================
 
 Encadeamento separado (com árvores binárias):
-Para a busca de 1009 números inteiros, após 10 execuções diferentes buscando os mesmos elementos
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
 a estratégia de tratamento de colisão por encadeamento separado com árvores binárias resultou em
 
-->	Tempo médio-aritmético de execução: (0.000022)s
+->	Tempo médio-aritmético de execução: (0.000073)s
 
-[1]ª execução: (0.000030)s
-[2]ª execução: (0.000025)s
-[3]ª execução: (0.000024)s
-[4]ª execução: (0.000023)s
-[5]ª execução: (0.000021)s
-[6]ª execução: (0.000021)s
-[7]ª execução: (0.000021)s
-[8]ª execução: (0.000020)s
-[9]ª execução: (0.000020)s
-[10]ª execução: (0.000020)s
+[1]ª execução: (0.000105)s
+[2]ª execução: (0.000083)s
+[3]ª execução: (0.000079)s
+[4]ª execução: (0.000070)s
+[5]ª execução: (0.000068)s
+[6]ª execução: (0.000066)s
+[7]ª execução: (0.000066)s
+[8]ª execução: (0.000065)s
+[9]ª execução: (0.000065)s
+[10]ª execução: (0.000066)s
+
+=========================
 
 Sondagem linear:
-Para a busca de 1009 números inteiros, após 10 execuções diferentes buscando os mesmos elementos
-a estratégia de colisão por sondagem linear resultou em
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
+a estratégia de tratamento de colisão por sondagem linear resultou em
 
-->	Tempo médio-aritmético de execução: (0.000312)s
+->	Tempo médio-aritmético de execução: (0.010936)s
 
-[1]ª execução: (0.000309)s
-[2]ª execução: (0.000302)s
-[3]ª execução: (0.000309)s
-[4]ª execução: (0.000319)s
-[5]ª execução: (0.000305)s
-[6]ª execução: (0.000304)s
-[7]ª execução: (0.000334)s
-[8]ª execução: (0.000303)s
-[9]ª execução: (0.000314)s
-[10]ª execução: (0.000317)s
+[1]ª execução: (0.017354)s
+[2]ª execução: (0.013723)s
+[3]ª execução: (0.011776)s
+[4]ª execução: (0.010447)s
+[5]ª execução: (0.009372)s
+[6]ª execução: (0.009437)s
+[7]ª execução: (0.009691)s
+[8]ª execução: (0.008973)s
+[9]ª execução: (0.009715)s
+[10]ª execução: (0.008874)s
+
+=========================
 
 Sondagem quadrática:
-Para a busca de 1009 números inteiros, após 10 execuções diferentes buscando os mesmos elementos
-a estratégia de colisão por sondagem quadrática resultou em
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
+a estratégia de tratamento de colisão por sondagem quadrática resultou em
 
-->	Tempo médio-aritmético de execução: (0.000189)s
+->	Tempo médio-aritmético de execução: (0.000191)s
 
-[1]ª execução: (0.000190)s
-[2]ª execução: (0.000190)s
-[3]ª execução: (0.000194)s
-[4]ª execução: (0.000189)s
-[5]ª execução: (0.000188)s
-[6]ª execução: (0.000190)s
-[7]ª execução: (0.000188)s
-[8]ª execução: (0.000191)s
-[9]ª execução: (0.000185)s
-[10]ª execução: (0.000186)s
+[1]ª execução: (0.000192)s
+[2]ª execução: (0.000178)s
+[3]ª execução: (0.000176)s
+[4]ª execução: (0.000176)s
+[5]ª execução: (0.000175)s
+[6]ª execução: (0.000196)s
+[7]ª execução: (0.000227)s
+[8]ª execução: (0.000181)s
+[9]ª execução: (0.000206)s
+[10]ª execução: (0.000208)s
+
+=========================
 
 Hash duplo:
-Para a busca de 1009 números inteiros, após 10 execuções diferentes buscando os mesmos elementos
-a estratégia de colisão por sondagem dupla (Hash Duplo) resultou em
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
+a estratégia de tratamento de colisão por hash duplo resultou em
 
-->	Tempo médio-aritmético de execução: (0.000195)s
+->	Tempo médio-aritmético de execução: (0.000204)s
 
-[1]ª execução: (0.000193)s
-[2]ª execução: (0.000198)s
-[3]ª execução: (0.000192)s
-[4]ª execução: (0.000192)s
-[5]ª execução: (0.000194)s
-[6]ª execução: (0.000192)s
-[7]ª execução: (0.000201)s
-[8]ª execução: (0.000201)s
-[9]ª execução: (0.000195)s
-[10]ª execução: (0.000192)s
+[1]ª execução: (0.000202)s
+[2]ª execução: (0.000259)s
+[3]ª execução: (0.000209)s
+[4]ª execução: (0.000191)s
+[5]ª execução: (0.000183)s
+[6]ª execução: (0.000184)s
+[7]ª execução: (0.000203)s
+[8]ª execução: (0.000189)s
+[9]ª execução: (0.000176)s
+[10]ª execução: (0.000248)s

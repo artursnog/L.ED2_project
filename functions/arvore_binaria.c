@@ -23,7 +23,7 @@ Hash_AB *novo_no (int chave)
     return sub_arvore;
 }
 
-void iniciar_AB (Hash_AB *tabela_AB [])
+void iniciar_AB (Hash_AB *tabela_AB []) // FUNÇÃO PARA INICIALIZAR OS "BUCKETS" DA TABELA
 {
     for (int i = 0; i < tamanho; i++)
     {

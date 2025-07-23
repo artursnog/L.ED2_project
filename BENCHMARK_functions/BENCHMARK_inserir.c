@@ -1,7 +1,7 @@
 #include "../functions/functions_headers.h"
 
 // FUNÇÃO PARA A ANÁLISE DE PERFOMANCE DE INSERÇÃO DAS DUAS ESTRATÉGIAS
-void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL tabela_SL [], Hash_SQ tabela_SQ [], Hash_SD tabela_SD [])
+void BENCHMARK_inserir ()
 {
     FILE *file;
 
@@ -11,28 +11,29 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
         file = fopen ("Execution_Reports/Insertion_Report.txt", "w");
     #endif
     
-    if (!file)
+    if (file == NULL)
     {
         perror ("");
         exit (EXIT_FAILURE);
     }
 
-    puts ("[INSERÇÃO]\n");
-    fprintf (file, "[INSERÇÃO]\n\n");
+    Hash_ES *tabela_ES [tamanho]; Hash_AB *tabela_AB [tamanho];
+    Hash_SL tabela_SL [tamanho]; Hash_SQ tabela_SQ [tamanho]; Hash_SD tabela_SD [tamanho];
 
-    int chaves [num_elementos]; // Vetor dos elementos que serão inseridos
-
-    gerar_elementos (num_elementos, chaves);
+    gerar_elementos (chaves);
 
     clock_t tempo_i;
     double tempo_t = 0.0, tempos [10];
     int colisoes_t = 0;
+
+    puts ("[INSERÇÃO]\n");
+    fprintf (file, "[INSERÇÃO]\n\n");
     
 // ========== ENCADEAMENTO SEPARADO ==========
 
     {
         puts ("Encadeamento separado:");
-        fprintf (file, "Encadeamento separado:\n");
+        fprintf (file, "=========================\n\nEncadeamento separado:\n");
 
         for (int i = 0; i < 10; i++) // Laço para a tomada de 10 (dez) medida de tempo para a média aritmética
         {
@@ -41,33 +42,19 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
             colisoes_ES = 0;
             tempo_i = clock ();
 
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
             {
                 inserir_ES (tabela_ES, chaves [j]);
             }
 
             tempos [i] = (double)(clock () - tempo_i) / CLOCKS_PER_SEC;
-            
             tempo_t += tempos [i];
             colisoes_t += colisoes_ES;
 
             liberar_ES (tabela_ES);
         }
 
-        printf ("Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos a estratégia de tratamento de colisão por encadeamento separado resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos\na estratégia de tratamento de colisão por encadeamento separado resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        colisoes_t / 10, tempo_t / 10.0);
-        fprintf (file, "->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        colisoes_t / 10, tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados_inserir (file, "encadeamento separado", colisoes_t, tempo_t, tempos);
     }
 
     colisoes_t = 0; // Redefinição da medida de colisões total
@@ -76,8 +63,8 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
 // ========== ENCADEAMENTO SEPARADO (COM ÁRVORES BINÁRIAS DE BUSCA) ==========
 
     {
-        puts ("\nEncadeamento separado (com árvores binárias de busca):");
-        fprintf (file, "\nEncadeamento separado (com árvores binárias de busca):\n");
+        puts ("\nEncadeamento separado com árvores binárias de busca:");
+        fprintf (file, "\n=========================\n\nEncadeamento separado (com árvores binárias de busca):\n");
 
         for (int i = 0; i < 10; i++)
         {
@@ -86,33 +73,19 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
             colisoes_AB = 0;
             tempo_i = clock ();
 
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
             {
                 inserir_AB (tabela_AB, chaves [j]);
             }
 
             tempos [i] = (double)(clock () - tempo_i) / CLOCKS_PER_SEC;
-            
             tempo_t += tempos [i];
             colisoes_t += colisoes_AB;
 
             liberar_AB (tabela_AB);
         }
 
-        printf ("Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos a estratégia de tratamento de colisão por encadeamento separado com árvores binárias de busca (BSTs) resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos\na estratégia de tratamento de colisão por encadeamento separado com árvores binárias de busca (BSTs) resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        colisoes_t / 10, tempo_t / 10.0);
-        fprintf (file, "->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        colisoes_t / 10, tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados_inserir (file, "encadeamento separado com árvores binárias de busca", colisoes_t, tempo_t, tempos);
     }
 
     colisoes_t = 0;
@@ -122,7 +95,7 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
 
     {
         puts ("\nSondagem linear:");
-        fprintf (file, "\nSondagem linear:\n");
+        fprintf (file, "\n=========================\n\nSondagem linear:\n");
 
         for (int i = 0; i < 10; i++)
         {
@@ -131,31 +104,17 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
             colisoes_SL = 0;
             tempo_i = clock ();
 
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
             {
                 inserir_SL (tabela_SL, chaves [j]);
             }
 
             tempos [i] = ((double)(clock () - tempo_i) / CLOCKS_PER_SEC);
-
             tempo_t += tempos [i];
             colisoes_t += colisoes_SL;
         }
 
-        printf ("Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos a estratégia de tratamento de colisão por sondagem linear resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos\na estratégia de tratamento de colisão por sondagem linear resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        colisoes_t / 10, tempo_t / 10.0);
-        fprintf (file, "->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        colisoes_t / 10, tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados_inserir (file, "sondagem linear", colisoes_t, tempo_t, tempos);
     }
 
     colisoes_t = 0; 
@@ -165,7 +124,7 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
 
     {
         puts ("\nSondagem quadrática:");
-        fprintf (file, "\nSondagem quadrática:\n");
+        fprintf (file, "\n=========================\n\nSondagem quadrática:\n");
 
         for (int i = 0; i < 10; i++)
         {
@@ -174,31 +133,17 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
             colisoes_SQ = 0;
             tempo_i = clock ();
 
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
             {
                 inserir_SQ(tabela_SQ, chaves[j]);
             }
 
             tempos[i] = ((double)(clock () - tempo_i) / CLOCKS_PER_SEC);
-
             tempo_t += tempos[i];
             colisoes_t += colisoes_SQ;
         }
 
-        printf ("Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos a estratégia de tratamento de colisão por sondagem quadrática resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos\na estratégia de tratamento de colisão por sondagem quadrática resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        colisoes_t / 10, tempo_t / 10.0);
-        fprintf (file, "->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        colisoes_t / 10, tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados_inserir (file, "sondagem quadrática", colisoes_t, tempo_t, tempos);
     }
 
     colisoes_t = 0;
@@ -208,7 +153,7 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
 
     {
         puts ("\nHash duplo:");
-        fprintf (file, "\nHash duplo:\n");
+        fprintf (file, "\n=========================\n\nHash duplo:\n");
 
         for (int i = 0; i < 10; i++)
         {
@@ -217,32 +162,20 @@ void BENCHMARK_inserir (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
             colisoes_SD = 0;
             tempo_i = clock ();
 
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
             {
                 inserir_SD(tabela_SD, chaves[j]);
             }
 
             tempos[i] = ((double)(clock () - tempo_i) / CLOCKS_PER_SEC);
-
             tempo_t += tempos[i];
             colisoes_t += colisoes_SD;
         }
 
-        printf ("Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos a estratégia de tratamento de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a inserção de %i números inteiros, após 10 execuções diferentes inserindo os mesmos elementos\na estratégia de tratamento de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        colisoes_t / 10, tempo_t / 10.0);
-        fprintf (file, "->\tMédia de %i colisões\n->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        colisoes_t / 10, tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados_inserir (file, "hash duplo", colisoes_t, tempo_t, tempos);
     }
+
+    BREAKL;
 
     fclose (file);
 }

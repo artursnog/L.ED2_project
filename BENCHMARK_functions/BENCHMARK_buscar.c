@@ -1,7 +1,9 @@
 #include "../functions/functions_headers.h"
 
+void TMPRR_inicializar (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL tabela_SL [], Hash_SQ tabela_SQ [], Hash_SD tabela_SD []); // FUNÇÃO LOCAL PARA A INICIALIZAÇÃO E PREENCHIMENTO DAS TABELAS PARA O TESTE
+
 // FUNÇÃO PARA A ANÁLISE DE PERFOMANCE DE BUSCA DAS DUAS ESTRATÉGIAS
-void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [],  Hash_SL tabela_SL [], Hash_SQ tabela_SQ [], Hash_SD tabela_SD [])
+void BENCHMARK_buscar ()
 {
     FILE *file;
 
@@ -11,43 +13,36 @@ void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [],  Hash_SL ta
         file = fopen ("Execution_Reports/Search_Report.txt", "w");
     #endif
     
-    if (!file)
+    if (file == NULL)
     {
         perror ("");
         exit (EXIT_FAILURE);
     }
+
+    Hash_ES *tabela_ES [tamanho]; Hash_AB *tabela_AB [tamanho];
+    Hash_SL tabela_SL [tamanho]; Hash_SQ tabela_SQ [tamanho]; Hash_SD tabela_SD [tamanho];
     
-    puts ("[BUSCA]\n");
-    fprintf (file, "[BUSCA]\n\n");
+    TMPRR_inicializar (tabela_ES, tabela_AB, tabela_SL, tabela_SQ, tabela_SD);
 
-    int chaves [num_elementos]; // Vetor dos elementos que serão buscados
-
-    gerar_elementos (num_elementos, chaves);
+    gerar_elementos (chaves);
 
     clock_t tempo_i;
     double tempo_t = 0.0, tempos [10];
 
-    iniciar_ES (tabela_ES);
-    iniciar_SL (tabela_SL);
-
-    for (int i = 0; i < num_elementos; i++) // PREENCHIMENTO DAS TABELAS PARA O TESTE
-    {
-        inserir_ES (tabela_ES, chaves [i]);
-        inserir_SL (tabela_SL, chaves [i]);
-        inserir_AB (tabela_AB, chaves [i]);
-    }
+    puts ("[BUSCA]\n");
+    fprintf (file, "[BUSCA]\n\n");
 
 // ========== ENCADEAMENTO SEPARADO ==========
 
     {
         puts ("Encadeamento separado:");
-        fprintf (file, "Encadeamento separado:n");
+        fprintf (file, "=========================\n\nEncadeamento separado:\n");
 
         for (int i = 0; i < 10; i++) // Laço para a tomada de 10 (dez) medida de tempo para a média aritmética
         {
             tempo_i = clock ();
 
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
             {
                 buscar_ES (tabela_ES, chaves [j]);
             }
@@ -57,20 +52,9 @@ void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [],  Hash_SL ta
             tempo_t += tempos [i];
         }
 
-        printf ("Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos a estratégia de tratamento de colisão por encadeamento separado resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos\na estratégia de tratamento de colisão por encadeamento separado resultou em\n\n",
-        num_elementos);
+        registrar_dados (file, "encadeamento separado", tempo_t, tempos);
 
-        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        tempo_t / 10.0);
-        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        liberar_ES (tabela_ES);
     }
 
     tempo_t = 0.0; // Redefinição da medida de tempo total
@@ -79,13 +63,13 @@ void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [],  Hash_SL ta
 
     {
         puts ("\nEncadeamento separado (com árvores binárias):");
-        fprintf (file, "\nEncadeamento separado (com árvores binárias):\n");
+        fprintf (file, "\n=========================\n\nEncadeamento separado (com árvores binárias):\n");
 
         for (int i = 0; i < 10; i++) // Laço para a tomada de 10 (dez) medida de tempo para a média aritmética
         {
             tempo_i = clock ();
 
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
             {
                 buscar_AB (tabela_AB, chaves [j]);
             }
@@ -95,20 +79,7 @@ void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [],  Hash_SL ta
             tempo_t += tempos [i];
         }
 
-        printf ("Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos a estratégia de tratamento de colisão por encadeamento separado com árvores binárias resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos\na estratégia de tratamento de colisão por encadeamento separado com árvores binárias resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        tempo_t / 10.0);
-        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados (file, "encadeamento separado com árvores binárias", tempo_t, tempos);
 
         liberar_AB (tabela_AB);
     }
@@ -119,13 +90,13 @@ void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [],  Hash_SL ta
 
     {
         puts ("\nSondagem linear:");
-        fprintf (file, "\nSondagem linear:\n");
+        fprintf (file, "\n=========================\n\nSondagem linear:\n");
 
         for (int i = 0; i < 10; i++) // Laço para a tomada de 10 (dez) medida de tempo para a média aritmética
         {
             tempo_i = clock ();
 
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
             {
                 buscar_SL (tabela_SL, chaves [j]);
             }
@@ -135,22 +106,7 @@ void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [],  Hash_SL ta
             tempo_t += tempos [i];
         }
 
-        printf ("Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos a estratégia de tratamento de colisão por sondagem linear resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos\na estratégia de colisão por sondagem linear resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        tempo_t / 10.0);
-        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
-
-        liberar_ES (tabela_ES);
+        registrar_dados (file, "sondagem linear", tempo_t, tempos);
     }
 
     tempo_t = 0.0; 
@@ -159,34 +115,21 @@ void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [],  Hash_SL ta
 
     {
         puts("\nSondagem quadrática:");
-        fprintf(file, "\nSondagem quadrática:\n");
+        fprintf(file, "\n=========================\n\nSondagem quadrática:\n");
 
         iniciar_SQ(tabela_SQ);
-        for (int j = 0; j < num_elementos; j++)
+        for (int j = 0; j < NUM_ELEMENTOS; j++)
             inserir_SQ(tabela_SQ, chaves[j]);
 
         for (int i = 0; i < 10; i++) {
             tempo_i = clock();
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
                 buscar_SQ(tabela_SQ, chaves[j]);
             tempos[i] = (double)(clock() - tempo_i) / CLOCKS_PER_SEC;
             tempo_t += tempos[i];
         }
 
-        printf ("Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos a estratégia de tratamento de colisão por sondagem quadrática resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos\na estratégia de colisão por sondagem quadrática resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        tempo_t / 10.0);
-        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados (file, "sondagem quadrática", tempo_t, tempos);
     }
 
     tempo_t = 0.0;
@@ -195,35 +138,42 @@ void BENCHMARK_buscar (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [],  Hash_SL ta
 
     {
         puts("\nHash duplo:");
-        fprintf(file, "\nHash duplo:\n");
+        fprintf(file, "\n=========================\n\nHash duplo:\n");
 
         iniciar_SD(tabela_SD);
-        for (int j = 0; j < num_elementos; j++)
+        for (int j = 0; j < NUM_ELEMENTOS; j++)
             inserir_SD(tabela_SD, chaves[j]);
 
         for (int i = 0; i < 10; i++) {
             tempo_i = clock();
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
                 buscar_SD(tabela_SD, chaves[j]);
             tempos[i] = (double)(clock() - tempo_i) / CLOCKS_PER_SEC;
             tempo_t += tempos[i];
         }
 
-        printf ("Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos a estratégia de tratamento de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a busca de %i números inteiros, após 10 execuções diferentes buscando os mesmos elementos\na estratégia de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        tempo_t / 10.0);
-        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados (file, "hash duplo", tempo_t, tempos);
 
     }
+    BREAKL;
+
     fclose(file);
+}
+
+void TMPRR_inicializar (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL tabela_SL [], Hash_SQ tabela_SQ [], Hash_SD tabela_SD [])
+{
+    iniciar_ES (tabela_ES);
+    iniciar_AB (tabela_AB);
+    iniciar_SL (tabela_SL);
+    iniciar_SQ (tabela_SQ);
+    iniciar_SD (tabela_SD);
+
+    for (int i = 0; i < NUM_ELEMENTOS; i++)
+    {
+        inserir_ES (tabela_ES, chaves [i]);
+        inserir_AB (tabela_AB, chaves [i]);
+        inserir_SL (tabela_SL, chaves [i]);
+        inserir_SQ (tabela_SQ, chaves [i]);
+        inserir_SD (tabela_SD, chaves [i]);
+    }
 }

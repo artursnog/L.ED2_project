@@ -7,7 +7,7 @@ void TMPRR_inserir_SQ (Hash_SQ tabela_SQ [], int chaves []);
 void TMPRR_inserir_SD (Hash_SD tabela_SD [], int chaves []);
 
 // FUNÇÃO PARA A ANÁLISE DE PERFOMANCE DE REMOÇÃO DAS DUAS ESTRATÉGIAS
-void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL tabela_SL [], Hash_SQ tabela_SQ [], Hash_SD tabela_SD [])
+void BENCHMARK_remover ()
 {
     FILE *file;
 
@@ -17,27 +17,28 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
         file = fopen ("Execution_Reports/Removal_Report.txt", "w");
     #endif
     
-    if (!file)
+    if (file == NULL)
     {
         perror ("");
         exit (EXIT_FAILURE);
     }
 
-    puts ("[REMOÇÃO]\n");
-    fprintf (file, "[REMOÇÃO]\n\n");
-
-    int chaves [num_elementos]; // Vetor dos elementos que serão inseridos
-
-    gerar_elementos (num_elementos, chaves);
-
+    Hash_ES *tabela_ES [tamanho]; Hash_AB *tabela_AB [tamanho];
+    Hash_SL tabela_SL [tamanho]; Hash_SQ tabela_SQ [tamanho]; Hash_SD tabela_SD [tamanho];
+    
+    gerar_elementos (chaves);
+    
     clock_t tempo_i;
     double tempo_t = 0.0, tempos [10];
+
+    puts ("[REMOÇÃO]\n");
+    fprintf (file, "[REMOÇÃO]\n\n");
 
 // ========== ENCADEAMENTO SEPARADO ==========
 
     {
         puts ("Encadeamento separado:");
-        fprintf (file, "Encadeamento separado:\n");
+        fprintf (file, "=========================\n\nEncadeamento separado:\n");
 
         for (int i = 0; i < 10; i++)
         {
@@ -45,7 +46,7 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
 
             tempo_i = clock ();
 
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
             {
                 remover_ES (tabela_ES, chaves [j]);
             }
@@ -57,20 +58,7 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
             liberar_ES (tabela_ES); // LIBERAR ANTES DA REINSERÇÃO DOS ELEMENTOS PARA NOVO TESTE
         }
 
-        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de tratamento de colisão por encadeamento separado resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de tratamento de colisão por encadeamento separado resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        tempo_t / 10.0);
-        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados (file, "encadeamento separado", tempo_t, tempos);
     }
 
     tempo_t = 0.0; // Redefinição da medida de tempo total
@@ -79,7 +67,7 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
 
     {
         puts ("\nEncadeamento separado com árvores binárias:");
-        fprintf (file, "\nEncadeamento separado com árvores binárias:\n");
+        fprintf (file, "\n=========================\n\nEncadeamento separado com árvores binárias:\n");
 
         for (int i = 0; i < 10; i++)
         {
@@ -87,7 +75,7 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
 
             tempo_i = clock ();
 
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
             {
                 remover_AB (tabela_AB, chaves [j]);
             }
@@ -99,20 +87,7 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
             liberar_AB (tabela_AB); // LIBERAR ANTES DA REINSERÇÃO DOS ELEMENTOS PARA NOVO TESTE
         }
 
-        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de tratamento de colisão por encadeamento separado com árvores binárias resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de tratamento de colisão por encadeamento separado com árvores binárias resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        tempo_t / 10.0);
-        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados (file, "encadeamento separado com árvores binárias", tempo_t, tempos);
     }
 
     tempo_t = 0.0;
@@ -121,7 +96,7 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
 
     {
         puts ("\nSondagem linear:");
-        fprintf (file, "\nSondagem linear:\n");
+        fprintf (file, "\n=========================\n\nSondagem linear:\n");
 
         for (int i = 0; i < 10; i++)
         {
@@ -129,7 +104,7 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
 
             tempo_i = clock ();
 
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
             {
                 remover_SL (tabela_SL, chaves [j]);
             }
@@ -139,20 +114,7 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
             tempo_t += tempos [i];
         }
 
-        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de tratamento de colisão por sondagem linear resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de tratamento de colisão por sondagem linear resultou em\n\n",
-        num_elementos);
-
-        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        tempo_t / 10.0);
-        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados (file, "sondagem linear", tempo_t, tempos);
     }
 
     tempo_t = 0.0;
@@ -161,33 +123,21 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
 
     {
         puts("\nSondagem quadrática:");
-        fprintf(file, "\nSondagem quadrática:\n");
+        fprintf(file, "\n=========================\n\nSondagem quadrática:\n");
 
         for (int i = 0; i < 10; i++) {
             iniciar_SQ(tabela_SQ);
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
                 inserir_SQ(tabela_SQ, chaves[j]);
 
             tempo_i = clock();
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
                 remover_SQ(tabela_SQ, chaves[j]);
             tempos[i] = (double)(clock() - tempo_i) / CLOCKS_PER_SEC;
             tempo_t += tempos[i];
         }
-        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de tratamento de colisão por sondagem quadrádica resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de tratamento de colisão por sondagem quadrádica resultou em\n\n",
-        num_elementos);
 
-        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        tempo_t / 10.0);
-        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        tempo_t / 10.0);
-
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
+        registrar_dados (file, "sondagem quadrática", tempo_t, tempos);
     }
 
     tempo_t = 0.0;
@@ -195,34 +145,25 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL ta
 // ========== HASH DUPLO ==========
     {
         puts("\nHash duplo:");
-        fprintf(file, "\nHash duplo:\n");
+        fprintf(file, "\n=========================\n\nHash duplo:\n");
 
         for (int i = 0; i < 10; i++) {
             iniciar_SD(tabela_SD);
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
                 inserir_SD(tabela_SD, chaves[j]);
 
             tempo_i = clock();
-            for (int j = 0; j < num_elementos; j++)
+            for (int j = 0; j < NUM_ELEMENTOS; j++)
                 remover_SD(tabela_SD, chaves[j]);
             tempos[i] = (double)(clock() - tempo_i) / CLOCKS_PER_SEC;
             tempo_t += tempos[i];
         }
-        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de tratamento de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
-        num_elementos);
-        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de tratamento de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
-        num_elementos);
 
-        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
-        tempo_t / 10.0);
-        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
-        tempo_t / 10.0);
+        registrar_dados (file, "hash duplo", tempo_t, tempos);
 
-        for (int i = 0; i < 10; i++)
-        {
-            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
-        }
     }
+
+    BREAKL;
 
     fclose (file);
 }
