@@ -1,0 +1,91 @@
+[INSERÇÃO]
+
+Encadeamento separado:
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
+a estratégia de tratamento de colisão por encadeamento separado resultou em
+
+->	Média de 373 colisões
+->	Tempo médio-aritmético de execução: (0.000040)s
+
+[1]ª execução: (0.000066)s
+[2]ª execução: (0.000040)s
+[3]ª execução: (0.000039)s
+[4]ª execução: (0.000036)s
+[5]ª execução: (0.000036)s
+[6]ª execução: (0.000036)s
+[7]ª execução: (0.000036)s
+[8]ª execução: (0.000036)s
+[9]ª execução: (0.000037)s
+[10]ª execução: (0.000036)s
+
+Encadeamento separado (com árvores binárias de busca):
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
+a estratégia de tratamento de colisão por encadeamento separado com árvores binárias de busca (BSTs) resultou em
+
+->	Média de 373 colisões
+->	Tempo médio-aritmético de execução: (0.000053)s
+
+[1]ª execução: (0.000057)s
+[2]ª execução: (0.000054)s
+[3]ª execução: (0.000057)s
+[4]ª execução: (0.000052)s
+[5]ª execução: (0.000051)s
+[6]ª execução: (0.000051)s
+[7]ª execução: (0.000051)s
+[8]ª execução: (0.000050)s
+[9]ª execução: (0.000051)s
+[10]ª execução: (0.000051)s
+
+Sondagem linear:
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
+a estratégia de tratamento de colisão por sondagem linear resultou em
+
+->	Média de 25992 colisões
+->	Tempo médio-aritmético de execução: (0.000345)s
+
+[1]ª execução: (0.000356)s
+[2]ª execução: (0.000353)s
+[3]ª execução: (0.000350)s
+[4]ª execução: (0.000359)s
+[5]ª execução: (0.000337)s
+[6]ª execução: (0.000338)s
+[7]ª execução: (0.000342)s
+[8]ª execução: (0.000334)s
+[9]ª execução: (0.000336)s
+[10]ª execução: (0.000343)s
+
+Sondagem quadrática:
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
+a estratégia de tratamento de colisão por sondagem quadrática resultou em
+
+->	Média de 18179 colisões
+->	Tempo médio-aritmético de execução: (0.000231)s
+
+[1]ª execução: (0.000264)s
+[2]ª execução: (0.000262)s
+[3]ª execução: (0.000228)s
+[4]ª execução: (0.000225)s
+[5]ª execução: (0.000235)s
+[6]ª execução: (0.000220)s
+[7]ª execução: (0.000217)s
+[8]ª execução: (0.000217)s
+[9]ª execução: (0.000221)s
+[10]ª execução: (0.000217)s
+
+Hash duplo:
+Para a inserção de 1009 números inteiros, após 10 execuções diferentes inserindo os mesmos elementos
+a estratégia de tratamento de colisão por sondagem dupla (Hash Duplo) resultou em
+
+->	Média de 16590 colisões
+->	Tempo médio-aritmético de execução: (0.000187)s
+
+[1]ª execução: (0.000193)s
+[2]ª execução: (0.000198)s
+[3]ª execução: (0.000192)s
+[4]ª execução: (0.000189)s
+[5]ª execução: (0.000189)s
+[6]ª execução: (0.000188)s
+[7]ª execução: (0.000189)s
+[8]ª execução: (0.000189)s
+[9]ª execução: (0.000173)s
+[10]ª execução: (0.000173)s

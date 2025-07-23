@@ -1,43 +1,13 @@
 #include "../functions/functions_headers.h"
 
-void TMPRR_inserir_ES (Hash_ES *tabela_ES [], int chaves []) // FUNÇÃO LOCAL PARA A INSERÇÃO NA TABELA DE ENCADEAMENTO SEPARADO APÓS ESVAZIAMENTO POR TESTE
-{
-    iniciar_ES (tabela_ES);
-
-    for (int i = 0; i < num_elementos; i++)
-    {
-        inserir_ES (tabela_ES, chaves [i]);
-    }
-}
-
-void TMPRR_inserir_SL (Hash_SL tabela_SL [], int chaves []) // FUNÇÃO LOCAL PARA A INSERÇÃO NA TABELA DE SONDAGEM LINEAR APÓS ESVAZIAMENTO POR TESTE
-{
-    iniciar_SL (tabela_SL);
-
-    for (int i = 0; i < num_elementos; i++)
-    {
-        inserir_SL (tabela_SL, chaves [i]);
-    }
-}
-
-void TMPRR_inserir_SQ (Hash_SQ tabela_SQ [], int chaves []){ // FUNÇÃO LOCAL PARA A INSERÇÃO NA TABELA DE SONDAGEM QUADRADICA APÓS ESVAZIAMENTO POR TESTE
-    iniciar_SQ (tabela_SQ);
-
-    for(int i = 0; i < num_elementos; i++){
-        inserir_SQ (tabela_SQ, chaves [i]);
-    }
-}
-
-void TMPRR_inserir_SD (Hash_SD tabela_SD [], int chaves []){ // FUNÇÃO LOCAL PARA A INSERÇÃO NA TABELA DE SONDAGEM DUPLA (HASH DUPLO) APÓS ESVAZIAMENTO POR TESTE
-    iniciar_SD (tabela_SD);
-    
-    for(int i = 0; i < num_elementos; i++){
-        inserir_SD (tabela_SD, chaves [i]);
-    }
-}
+void TMPRR_inserir_ES (Hash_ES *tabela_ES [], int chaves []);
+void TMPRR_inserir_AB (Hash_AB *tabela_AB [], int chaves []);
+void TMPRR_inserir_SL (Hash_SL tabela_SL [], int chaves []);
+void TMPRR_inserir_SQ (Hash_SQ tabela_SQ [], int chaves []);
+void TMPRR_inserir_SD (Hash_SD tabela_SD [], int chaves []);
 
 // FUNÇÃO PARA A ANÁLISE DE PERFOMANCE DE REMOÇÃO DAS DUAS ESTRATÉGIAS
-void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], Hash_SQ tabela_SQ [], Hash_SD tabela_SD [])
+void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_AB *tabela_AB [], Hash_SL tabela_SL [], Hash_SQ tabela_SQ [], Hash_SD tabela_SD [])
 {
     FILE *file;
 
@@ -87,9 +57,9 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], Hash_SQ tab
             liberar_ES (tabela_ES); // LIBERAR ANTES DA REINSERÇÃO DOS ELEMENTOS PARA NOVO TESTE
         }
 
-        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de colisão por encadeamento separado resultou em\n\n",
+        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de tratamento de colisão por encadeamento separado resultou em\n\n",
         num_elementos);
-        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de colisão por encadeamento separado resultou em\n\n",
+        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de tratamento de colisão por encadeamento separado resultou em\n\n",
         num_elementos);
 
         printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
@@ -104,6 +74,48 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], Hash_SQ tab
     }
 
     tempo_t = 0.0; // Redefinição da medida de tempo total
+
+// ========== ENCADEAMENTO SEPARADO (COM ÁRVORES BINÁRIAS) ==========
+
+    {
+        puts ("\nEncadeamento separado com árvores binárias:");
+        fprintf (file, "\nEncadeamento separado com árvores binárias:\n");
+
+        for (int i = 0; i < 10; i++)
+        {
+            TMPRR_inserir_AB (tabela_AB, chaves);
+
+            tempo_i = clock ();
+
+            for (int j = 0; j < num_elementos; j++)
+            {
+                remover_AB (tabela_AB, chaves [j]);
+            }
+
+            tempos [i] = (double)(clock () - tempo_i) / CLOCKS_PER_SEC;
+
+            tempo_t += tempos [i];
+
+            liberar_AB (tabela_AB); // LIBERAR ANTES DA REINSERÇÃO DOS ELEMENTOS PARA NOVO TESTE
+        }
+
+        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de tratamento de colisão por encadeamento separado com árvores binárias resultou em\n\n",
+        num_elementos);
+        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de tratamento de colisão por encadeamento separado com árvores binárias resultou em\n\n",
+        num_elementos);
+
+        printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
+        tempo_t / 10.0);
+        fprintf (file, "->\tTempo médio-aritmético de execução: (%.6lf)s\n\n",
+        tempo_t / 10.0);
+
+        for (int i = 0; i < 10; i++)
+        {
+            fprintf (file, "[%i]ª execução: (%.6lf)s\n", i + 1, tempos [i]);
+        }
+    }
+
+    tempo_t = 0.0;
 
 // ========== SONDAGEM LINEAR ==========
 
@@ -127,9 +139,9 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], Hash_SQ tab
             tempo_t += tempos [i];
         }
 
-        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de colisão por sondagem linear resultou em\n\n",
+        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de tratamento de colisão por sondagem linear resultou em\n\n",
         num_elementos);
-        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de colisão por sondagem linear resultou em\n\n",
+        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de tratamento de colisão por sondagem linear resultou em\n\n",
         num_elementos);
 
         printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
@@ -148,8 +160,8 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], Hash_SQ tab
 // ========== SONDAGEM QUADRÁTICA ==========
 
     {
-        puts("Sondagem quadrática:");
-        fprintf(file, "Sondagem quadrática:\n");
+        puts("\nSondagem quadrática:");
+        fprintf(file, "\nSondagem quadrática:\n");
 
         for (int i = 0; i < 10; i++) {
             iniciar_SQ(tabela_SQ);
@@ -162,9 +174,9 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], Hash_SQ tab
             tempos[i] = (double)(clock() - tempo_i) / CLOCKS_PER_SEC;
             tempo_t += tempos[i];
         }
-        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de colisão por sondagem quadrádica resultou em\n\n",
+        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de tratamento de colisão por sondagem quadrádica resultou em\n\n",
         num_elementos);
-        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de colisão por sondagem quadrádica resultou em\n\n",
+        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de tratamento de colisão por sondagem quadrádica resultou em\n\n",
         num_elementos);
 
         printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
@@ -178,13 +190,12 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], Hash_SQ tab
         }
     }
 
-
     tempo_t = 0.0;
 
 // ========== HASH DUPLO ==========
     {
-        puts("Hash duplo:");
-        fprintf(file, "Hash duplo:\n");
+        puts("\nHash duplo:");
+        fprintf(file, "\nHash duplo:\n");
 
         for (int i = 0; i < 10; i++) {
             iniciar_SD(tabela_SD);
@@ -197,9 +208,9 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], Hash_SQ tab
             tempos[i] = (double)(clock() - tempo_i) / CLOCKS_PER_SEC;
             tempo_t += tempos[i];
         }
-        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
+        printf ("Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos a estratégia de tratamento de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
         num_elementos);
-        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
+        fprintf (file, "Para a remoção de %i números inteiros, após 10 execuções diferentes removendo os mesmos elementos\na estratégia de tratamento de colisão por sondagem dupla (Hash Duplo) resultou em\n\n",
         num_elementos);
 
         printf ("->\tTempo médio-aritmético de execução: (%.6lf)s\n",
@@ -214,4 +225,50 @@ void BENCHMARK_remover (Hash_ES *tabela_ES [], Hash_SL tabela_SL [], Hash_SQ tab
     }
 
     fclose (file);
+}
+
+void TMPRR_inserir_ES (Hash_ES *tabela_ES [], int chaves []) // FUNÇÃO LOCAL PARA A INSERÇÃO NA TABELA DE ENCADEAMENTO SEPARADO APÓS ESVAZIAMENTO POR TESTE
+{
+    iniciar_ES (tabela_ES);
+
+    for (int i = 0; i < tamanho; i++)
+    {
+        inserir_ES (tabela_ES, chaves [i]);
+    }
+}
+
+void TMPRR_inserir_AB (Hash_AB *tabela_AB [], int chaves []) // FUNÇÃO LOCAL PARA A INSERÇÃO NA TABELA DE ENCADEAMENTO COM ÁRVORES BINÁRIAS
+{
+    iniciar_AB (tabela_AB);
+
+    for (int i = 0; i < tamanho; i++)
+    {
+        inserir_AB (tabela_AB, chaves [i]);
+    }
+}
+
+void TMPRR_inserir_SL (Hash_SL tabela_SL [], int chaves []) // FUNÇÃO LOCAL PARA A INSERÇÃO NA TABELA DE SONDAGEM LINEAR APÓS ESVAZIAMENTO POR TESTE
+{
+    iniciar_SL (tabela_SL);
+
+    for (int i = 0; i < tamanho; i++)
+    {
+        inserir_SL (tabela_SL, chaves [i]);
+    }
+}
+
+void TMPRR_inserir_SQ (Hash_SQ tabela_SQ [], int chaves []){ // FUNÇÃO LOCAL PARA A INSERÇÃO NA TABELA DE SONDAGEM QUADRADICA APÓS ESVAZIAMENTO POR TESTE
+    iniciar_SQ (tabela_SQ);
+
+    for(int i = 0; i < tamanho; i++){
+        inserir_SQ (tabela_SQ, chaves [i]);
+    }
+}
+
+void TMPRR_inserir_SD (Hash_SD tabela_SD [], int chaves []){ // FUNÇÃO LOCAL PARA A INSERÇÃO NA TABELA DE SONDAGEM DUPLA (HASH DUPLO) APÓS ESVAZIAMENTO POR TESTE
+    iniciar_SD (tabela_SD);
+    
+    for(int i = 0; i < tamanho; i++){
+        inserir_SD (tabela_SD, chaves [i]);
+    }
 }

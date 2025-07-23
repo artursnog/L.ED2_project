@@ -7,12 +7,13 @@
 int main ()
 {
     #ifdef __WIN32__
-        setlocale (LC_ALL, "");
+        setlocale (LC_ALL, "Portuguese");
     #endif
     
     srand (time (NULL));
 
     Hash_ES *tabela_ES [tamanho];
+    Hash_AB *tabela_AB [tamanho];
     Hash_SL tabela_SL [tamanho];
     Hash_SQ tabela_SQ [tamanho];
     Hash_SD tabela_SD [tamanho];
@@ -22,15 +23,15 @@ int main ()
     
     BREAKL;
 
-    BENCHMARK_inserir (tabela_ES, tabela_SL, tabela_SQ, tabela_SD);
+    BENCHMARK_inserir (tabela_ES, tabela_AB, tabela_SL, tabela_SQ, tabela_SD);
 
     BREAKL;
     
-    BENCHMARK_buscar (tabela_ES, tabela_SL, tabela_SQ, tabela_SD);
+    BENCHMARK_buscar (tabela_ES, tabela_AB, tabela_SL, tabela_SQ, tabela_SD);
 
     BREAKL;
 
-    BENCHMARK_remover (tabela_ES, tabela_SL, tabela_SQ, tabela_SD);
+    BENCHMARK_remover (tabela_ES, tabela_AB, tabela_SL, tabela_SQ, tabela_SD);
 
     putchar ('\n');
 

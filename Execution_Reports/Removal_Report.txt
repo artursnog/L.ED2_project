@@ -1,0 +1,86 @@
+[REMOÇÃO]
+
+Encadeamento separado:
+Para a remoção de 1009 números inteiros, após 10 execuções diferentes removendo os mesmos elementos
+a estratégia de tratamento de colisão por encadeamento separado resultou em
+
+->	Tempo médio-aritmético de execução: (0.000038)s
+
+[1]ª execução: (0.000045)s
+[2]ª execução: (0.000037)s
+[3]ª execução: (0.000037)s
+[4]ª execução: (0.000037)s
+[5]ª execução: (0.000036)s
+[6]ª execução: (0.000037)s
+[7]ª execução: (0.000038)s
+[8]ª execução: (0.000037)s
+[9]ª execução: (0.000036)s
+[10]ª execução: (0.000036)s
+
+Encadeamento separado com árvores binárias:
+Para a remoção de 1009 números inteiros, após 10 execuções diferentes removendo os mesmos elementos
+a estratégia de tratamento de colisão por encadeamento separado com árvores binárias resultou em
+
+->	Tempo médio-aritmético de execução: (0.000039)s
+
+[1]ª execução: (0.000040)s
+[2]ª execução: (0.000039)s
+[3]ª execução: (0.000039)s
+[4]ª execução: (0.000042)s
+[5]ª execução: (0.000038)s
+[6]ª execução: (0.000038)s
+[7]ª execução: (0.000038)s
+[8]ª execução: (0.000038)s
+[9]ª execução: (0.000038)s
+[10]ª execução: (0.000038)s
+
+Sondagem linear:
+Para a remoção de 1009 números inteiros, após 10 execuções diferentes removendo os mesmos elementos
+a estratégia de tratamento de colisão por sondagem linear resultou em
+
+->	Tempo médio-aritmético de execução: (0.000336)s
+
+[1]ª execução: (0.000332)s
+[2]ª execução: (0.000333)s
+[3]ª execução: (0.000334)s
+[4]ª execução: (0.000341)s
+[5]ª execução: (0.000335)s
+[6]ª execução: (0.000330)s
+[7]ª execução: (0.000331)s
+[8]ª execução: (0.000333)s
+[9]ª execução: (0.000332)s
+[10]ª execução: (0.000355)s
+
+Sondagem quadrática:
+Para a remoção de 1009 números inteiros, após 10 execuções diferentes removendo os mesmos elementos
+a estratégia de tratamento de colisão por sondagem quadrádica resultou em
+
+->	Tempo médio-aritmético de execução: (0.000195)s
+
+[1]ª execução: (0.000189)s
+[2]ª execução: (0.000183)s
+[3]ª execução: (0.000194)s
+[4]ª execução: (0.000185)s
+[5]ª execução: (0.000216)s
+[6]ª execução: (0.000189)s
+[7]ª execução: (0.000183)s
+[8]ª execução: (0.000199)s
+[9]ª execução: (0.000200)s
+[10]ª execução: (0.000211)s
+
+Hash duplo:
+Para a remoção de 1009 números inteiros, após 10 execuções diferentes removendo os mesmos elementos
+a estratégia de tratamento de colisão por sondagem dupla (Hash Duplo) resultou em
+
+->	Tempo médio-aritmético de execução: (0.000191)s
+
+[1]ª execução: (0.000208)s
+[2]ª execução: (0.000183)s
+[3]ª execução: (0.000186)s
+[4]ª execução: (0.000174)s
+[5]ª execução: (0.000257)s
+[6]ª execução: (0.000174)s
+[7]ª execução: (0.000172)s
+[8]ª execução: (0.000213)s
+[9]ª execução: (0.000173)s
+[10]ª execução: (0.000173)s
