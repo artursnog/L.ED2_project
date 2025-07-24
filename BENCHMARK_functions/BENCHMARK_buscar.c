@@ -22,9 +22,9 @@ void BENCHMARK_buscar ()
     Hash_ES *tabela_ES [tamanho]; Hash_AB *tabela_AB [tamanho];
     Hash_SL tabela_SL [tamanho]; Hash_SQ tabela_SQ [tamanho]; Hash_SD tabela_SD [tamanho];
     
-    TMPRR_inicializar (tabela_ES, tabela_AB, tabela_SL, tabela_SQ, tabela_SD);
-
     gerar_elementos (chaves);
+    
+    TMPRR_inicializar (tabela_ES, tabela_AB, tabela_SL, tabela_SQ, tabela_SD);
 
     clock_t tempo_i;
     double tempo_t = 0.0, tempos [10];
