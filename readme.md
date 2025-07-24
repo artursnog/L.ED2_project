@@ -26,6 +26,7 @@ O objetivo é analisar e comparar o desempenho de ambas as técnicas em termos d
 ```
 ├── functions/
 │   ├── encadeamento_separado.c    # Implementação com encadeamento separado
+│   ├── arvore_binaria.c           # Implementação da árvore binaria de busca
 │   ├── sondagem_linear.c          # Implementação com sondagem linear
 │   ├── sondagem_quadratica.c      # Implementação com sondagem quadrática
 │   ├── sondagem_dupla.c           # Implementação com Hash Duplo
@@ -78,6 +79,11 @@ int hashing2(int chave){
 - **Estrutura**: Utiliza duas funções hash para calcular o passo
 - **Vantagem**: Melhor distribuição
 - **Desvantagem**: Mais complexa computacionalmente
+
+### Arvore Binaria de Busca
+- **Estrutura**: Uma Árvore Binária de Busca na raiz de cada posição da tabela
+- **Vantagem**: Busca por elementos colididos mais rápida em média (O(log k)) em comparação com a lista encadeada
+- **Desvantagem**: Implementação mais complexa e pode degradar para O(k) em casos de árvores desbalanceadas
 
 ## Como Compilar e Executar
 
